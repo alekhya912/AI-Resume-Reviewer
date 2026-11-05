@@ -1,20 +1,23 @@
-import os
-from dotenv import load_dotenv
-from google import genai
+from flask import Flask, render_template,request
 
-# Load environment variables
-load_dotenv() 
+app = Flask(__name__) # Create the Flask application
 
-# Get API key
-api_key=os.getenv("GEMINI_API_KEY")
+# HOME ROUTE:
+# Handles requests to the homepage ("/")
+# Displays the index.html webpage
+@app.route("/")  
+def home():
+    return render_template("index.html")
 
-# Create Gemini client
-client=genai.Client(api_key=api_key)
+@app.route("/analyze",methods=["POST"])
+def analyze():
+    resume_file=request.files["resume"]
+    job_description=request.form["job_description"]
+    return f"""
+    <h2>Successfully received your information!</h2>
+    <p>Resume: {resume_file.filename}</p>
+    <p>Job Description: {job_description}</p>
+    """
 
-# Send a prompt
-res=client.models.generate_content(
-    model="gemini-3.5-flash-lite",
-    contents="Explain what an LLM is in simple words..."
-)
-
-print(res.text)
+if __name__ == "__main__":
+    app.run(debug=True)
