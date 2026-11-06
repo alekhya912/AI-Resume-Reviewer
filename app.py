@@ -1,5 +1,6 @@
 from flask import Flask, render_template,request
 from utils.resume_parser import extract_resume_text
+from gemini_client import analyze_resume
 
 app = Flask(__name__) # Create the Flask application
 
@@ -20,16 +21,13 @@ def analyze():
 
     resume_text = extract_resume_text(pdf_bytes)   # Extract readable text from the PDF
 
-    # Display the extracted resume text
-    return f"""
-    <h2>Resume Text Extracted Successfully!</h2>
+    result=analyze_resume(resume_file,job_description)
 
-    <h3>Uploaded Resume:</h3>
-    <p>{resume_file.filename}</p>
-
-    <h3>Extracted Resume Content:</h3>
-    <pre>{resume_text}</pre>
-    """
+    return render_template(
+        "result.html",
+        result=result,
+        filename=resume_file.filename
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)

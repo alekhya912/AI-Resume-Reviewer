@@ -1,20 +1,19 @@
-import os
-from dotenv import load_dotenv
-from google import genai
+from gemini_client import analyze_resume
 
-# Load environment variables
-load_dotenv() 
+# Sample resume
+resume_text = """
+Skills: Python, Java, SQL, HTML
+Experience: Python Developer Intern
+"""
 
-# Get API key
-api_key=os.getenv("GEMINI_API_KEY")
+# Sample job description
+job_description = """
+Looking for a Python developer with knowledge of
+Python, Flask, SQL, REST APIs and Git.
+"""
 
-# Create Gemini client
-client=genai.Client(api_key=api_key)
+# Call the function
+result = analyze_resume(resume_text, job_description)
 
-# Send a prompt
-res=client.models.generate_content(
-    model="gemini-3.5-flash-lite",
-    contents="Explain what an LLM is in simple words..."
-)
-
-print(res.text)
+# Display Gemini's response
+print(result)
