@@ -1,21 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Resume Analysis</title>
+    <title>Resume Analysis Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
     <h1>AI Resume Reviewer</h1>
 
-    <h2>Analysis Results</h2>
-
-    <p>Uploaded Resume: {{ filename }}</p>
-
-    <h3>Gemini's Feedback</h3>
-
-    <pre>{{ result }}</pre>
-
-    <a href="/">Analyse Another Resume</a>
+    <div class="result-container">
+        <h2>Analysis Results</h2>
+        <p><strong>Uploaded Resume:</strong> {{ filename }}</p>
+        <h3>Gemini's Feedback</h3>
+        <pre>{{ result }}</pre>
+        <a href="/" class="back-button">Analyse Another Resume</a>
+    </div>
 
 </body>
 </html>

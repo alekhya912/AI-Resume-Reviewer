@@ -12,7 +12,10 @@ api_key = os.getenv("GEMINI_API_KEY")
 client = genai.Client(api_key=api_key)
 
 def analyze_resume(resume_text,job_description):
-    prompt=f"""
+
+    print("Resume text received by Gemini:", resume_text)
+    
+    prompt = f"""
     You are an expert resume reviewer.
 
     Analyse the following resume against the job description.
@@ -23,14 +26,29 @@ def analyze_resume(resume_text,job_description):
     JOB DESCRIPTION:
     {job_description}
 
-    Provide:
-    1. Overall match score out of 100.
-    2. Matching skills.
-    3. Missing skills.
-    4. Suggestions to improve the resume.
+    Present your analysis using exactly these four sections:
 
-    Do not invent any qualifications or experience.
+    1. OVERALL MATCH SCORE
+    Give a score out of 100 and briefly explain the score.
+
+    2. MATCHING SKILLS
+    List the skills from the resume that match the job description.
+
+    3. MISSING SKILLS
+    List important skills required by the job description
+    that are not found in the resume.
+
+    4. IMPROVEMENT SUGGESTIONS
+    Give practical suggestions to improve the resume
+    for this particular job.
+
+    Important rules:
+    - Do not invent qualifications or experience.
+    - Only consider information actually present in the resume.
+    - If information is unavailable, clearly mention that.
+    - Be honest and specific in your evaluation.
     """
+
 
     # Send a prompt
     response=client.models.generate_content(

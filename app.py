@@ -20,8 +20,9 @@ def analyze():
     pdf_bytes = resume_file.read()  # Read the uploaded PDF as binary data
 
     resume_text = extract_resume_text(pdf_bytes)   # Extract readable text from the PDF
+    print(resume_text)
 
-    result=analyze_resume(resume_file,job_description)
+    result=analyze_resume(resume_text,job_description)
 
     return render_template(
         "result.html",
